@@ -1,32 +1,67 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div class="wrapper">
+    <div class="maincontent">
+      <ul class="lists">
+          <list
+            v-for="list in lists"
+            :key="list.key"
+            :list="list"
+          />
+      </ul>
+      <div class="display">
+        <SelectedList
+          v-for="list in lists"
+          :key="list.key"
+          :list="list"
+        />
+      </div>
     </div>
-    <router-view/>
   </div>
 </template>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+import List from './views/List'
+import SelectedList from './views/SelectedList'
+import { mapState } from 'vuex'
+export default {
+  components: {
+    List,
+    SelectedList
+  },
+  computed: {
+    ...mapState({
+      lists: (state) => state.lists
+    })
   }
+
 }
+</script>
+<style lang="scss">
+ul {
+  margin: 0;
+  padding: 0;
+}
+label {
+  cursor: pointer;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.maincontent {
+  display: flex;
+  padding: 20px;
+  border: 1px solid black;
+}
+.lists, .display {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 30px;
+  justify-content: flex-start;
+}
+.lists {
+  margin-right: 15px;
+}
+
 </style>
